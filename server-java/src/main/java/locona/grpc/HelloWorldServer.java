@@ -40,7 +40,7 @@ public class HelloWorldServer {
     static class GreeterImpl extends GreeterGrpc.GreeterImplBase {
         @Override
         public void sayHello(HelloRequest req, StreamObserver <HelloReply> responsObserver) {
-            HelloReply reply = HelloReply.newBuilder().setMessage("Hello " + req.getName()).build();
+            HelloReply reply = HelloReply.newBuilder().setMessage("Yo!! " + req.getName()).build();
             responsObserver.onNext(reply);
             responsObserver.onCompleted();
         }
