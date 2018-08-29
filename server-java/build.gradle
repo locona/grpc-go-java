@@ -1,9 +1,12 @@
 apply plugin: 'java'
+apply plugin: 'application'
 apply plugin: 'com.google.protobuf'
 
 buildscript {
     repositories {
-        mavenCentral()
+        maven {
+            url "https://maven-central.storage-download.googleapis.com/repos/central/data/"
+        }
     }
     dependencies {
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
@@ -12,14 +15,14 @@ buildscript {
 
 repositories {
     maven { // The google mirror is less flaky than mavenCentral()
-        url "https://maven-central.storage-download.googleapis.com/repos/central/data/" }
+        url "https://maven-central.storage-download.googleapis.com/repos/central/data/"
+    }
     mavenLocal()
 }
 
 def grpcVersion = '1.14.0'
 def protobufVersion = '3.5.1'
 def protocVersion = '3.5.1-1'
-
 
 dependencies {
     compile "com.google.api.grpc:proto-google-common-protos:1.0.0"
@@ -54,3 +57,18 @@ protobuf {
         all()*.plugins { grpc {} }
     }
 }
+
+startScripts.enabled = false
+
+task helloWorldServer(type: CreateStartScripts) {
+    mainClassName = 'locona.grpc.HelloWorldServer'
+    applicationName = 'hello-world-server'
+    outputDir = new File(project.buildDir, 'tmp')
+    classpath = jar.outputs.files + project.configurations.runtime
+}
+
+applicationDistribution.into('bin') {
+    from(helloWorldServer)
+    fileMode = 0755
+}
+
