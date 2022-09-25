@@ -25,7 +25,7 @@ def protobufVersion = '3.5.1'
 def protocVersion = '3.5.1-1'
 
 dependencies {
-    compile "com.google.api.grpc:proto-google-common-protos:1.0.0"
+    compile "com.google.api.grpc:proto-google-common-protos:1.17.0"
     compile "io.grpc:grpc-netty-shaded:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
